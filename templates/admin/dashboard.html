@@ -1,0 +1,79 @@
+<!-- templates/admin/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Admin Dashboard</h2>
+        </div>
+        <div class="card-body">
+            <p>Welcome to the admin panel. Manage exams, questions, and users from here.</p>
+            
+            <div class="admin-actions">
+                <a href="{{ url_for('admin_exams') }}" class="btn">Manage Exams</a>
+                <a href="{{ url_for('admin_students') }}" class="btn">Manage Students</a>
+                <a href="{{ url_for('admin_results') }}" class="btn">View Results</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">System Overview</h2>
+        </div>
+        <div class="card-body">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3>{{ total_students }}</h3>
+                    <p>Registered Students</p>
+                </div>
+                <div class="stat-box">
+                    <h3>{{ total_exams }}</h3>
+                    <p>Active Exams</p>
+                </div>
+                <div class="stat-box">
+                    <h3>{{ total_questions }}</h3>
+                    <p>Total Questions</p>
+                </div>
+                <div class="stat-box">
+                    <h3>{{ total_attempts }}</h3>
+                    <p>Exam Attempts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if recent_results %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Recent Exam Results</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in recent_results %}
+                        <tr>
+                            <td>{{ result[0] }}</td>
+                            <td>{{ result[1] }}</td>
+                            <td>{{ result[2] }}/{{ result[3] }} ({{ "%.1f"|format((result[2]/result[3]*100) if result[3] > 0 else 0) }}%)</td>
+                            <td>{{ result[4] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

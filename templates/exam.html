@@ -1,0 +1,46 @@
+<!-- templates/exam.html -->
+{% extends 'base.html' %}
+
+{% block title %}Exam - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{ exam[1] }}</h2>
+        </div>
+        <div class="card-body">
+            <p>{{ exam[2] }}</p>
+            <p>Time Limit: {{ exam[3] }} minutes</p>
+            <div id="timer" class="timer" data-time="{{ session['exam_time'] }}">
+                {{ (session['exam_time'] // 60)|int }}:{{ '%02d' % (session['exam_time'] % 60) }}
+            </div>
+        </div>
+    </div>
+
+    <form id="exam-form" method="POST" action="{{ url_for('submit_exam') }}">
+        {% for question in questions %}
+            <div class="question-container">
+                <p class="question-text">{{ loop.index }}. {{ question[2] }}</p>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="question_{{ question[0] }}" value="A" required>
+                        A. {{ question[3] }}
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="question_{{ question[0] }}" value="B">
+                        B. {{ question[4] }}
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="question_{{ question[0] }}" value="C">
+                        C. {{ question[5] }}
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="question_{{ question[0] }}" value="D">
+                        D. {{ question[6] }}
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Submit Exam</button>
+    </form>
+{% endblock %}

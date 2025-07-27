@@ -1,0 +1,32 @@
+<!-- templates/admin/add_edit_exam.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Edit' if exam else 'Add New' }} Exam - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{ 'Edit' if exam else 'Add New' }} Exam</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="title">Exam Title</label>
+                    <input type="text" id="title" name="title" value="{{ exam[1] if exam else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" required>{{ exam[2] if exam else '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="time_limit">Time Limit (minutes)</label>
+                    <input type="number" id="time_limit" name="time_limit" min="5" value="{{ exam[3] if exam else 30 }}" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Exam</button>
+                    <a href="{{ url_for('admin_exams') }}" class="btn">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- templates/admin/user_results.html -->
+{% extends 'base.html' %}
+
+{% block title %}User Results - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Results for: {{ username }}</h2>
+        </div>
+        <div class="card-body">
+            {% if results %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ result[1] }}</td>
+                                <td>{{ result[2] }}</td>
+                                <td>{{ result[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>This user hasn't taken any exams yet.</p>
+            {% endif %}
+            
+            <div class="form-actions">
+                <a href="{{ url_for('admin_users') }}" class="btn">Back to Users</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<!-- templates/admin/questions.html -->
+{% extends 'base.html' %}
+
+{% block title %}Manage Questions - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Questions for: {{ exam[1] }}</h2>
+            <a href="{{ url_for('admin_add_question', exam_id=exam[0]) }}" class="btn btn-small">Add New Question</a>
+        </div>
+        <div class="card-body">
+            <p><strong>Exam Description:</strong> {{ exam[2] }}</p>
+            <p><strong>Time Limit:</strong> {{ exam[3] }} minutes</p>
+            
+            {% if questions %}
+                <div class="questions-list">
+                    {% for question in questions %}
+                        <div class="question-item">
+                            <div class="question-header">
+                                <h3>Question {{ loop.index }}</h3>
+                                <div class="question-actions">
+                                    <a href="{{ url_for('admin_edit_question', question_id=question[0]) }}" class="btn btn-small">Edit</a>
+                                    <form method="POST" action="{{ url_for('admin_delete_question', question_id=question[0]) }}" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this question?');">
+                                        <button type="submit" class="btn btn-small danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="question-content">
+                                <p><strong>{{ question[2] }}</strong></p>
+                                <ol type="A" class="options-list">
+                                    <li>{{ question[3] }} {{ '✓' if question[7] == 'A' else '' }}</li>
+                                    <li>{{ question[4] }} {{ '✓' if question[7] == 'B' else '' }}</li>
+                                    <li>{{ question[5] }} {{ '✓' if question[7] == 'C' else '' }}</li>
+                                    <li>{{ question[6] }} {{ '✓' if question[7] == 'D' else '' }}</li>
+                                </ol>
+                                <p class="correct-answer">Correct Answer: {{ question[7] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No questions have been added to this exam yet.</p>
+            {% endif %}
+            
+            <div class="form-actions">
+                <a href="{{ url_for('admin_exams') }}" class="btn">Back to Exams</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

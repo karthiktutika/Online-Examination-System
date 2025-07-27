@@ -1,0 +1,70 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Welcome, {{ session['username'] }}!</h2>
+        </div>
+        <div class="card-body">
+            <p>Here's your personalized dashboard. You can take exams or view your previous results.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Available Exams</h2>
+        </div>
+        <div class="exam-list">
+            {% for exam in exams %}
+                <div class="exam-card">
+                    <div class="exam-card-header">
+                        <h3>{{ exam[1] }}</h3>
+                    </div>
+                    <div class="exam-card-body">
+                        <p>{{ exam[2] }}</p>
+                        <p>Time Limit: {{ exam[3] }} minutes</p>
+                    </div>
+                    <div class="exam-card-footer">
+                        <a href="{{ url_for('take_exam', exam_id=exam[0]) }}" class="btn">Take Exam</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Recent Results</h2>
+        </div>
+        <div class="card-body">
+            {% if results %}
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results[:5] %}
+                            <tr>
+                                <td>{{ result[1] }}</td>
+                                <td>{{ result[2] }}</td>
+                                <td>{{ result[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px;">
+                    <a href="{{ url_for('view_results') }}" class="btn">View All Results</a>
+                </p>
+            {% else %}
+                <p>You haven't taken any exams yet.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

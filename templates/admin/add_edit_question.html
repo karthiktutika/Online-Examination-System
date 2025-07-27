@@ -1,0 +1,49 @@
+<!-- templates/admin/add_edit_question.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Edit' if question else 'Add New' }} Question - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{ 'Edit' if question else 'Add New' }} Question for: {{ exam[1] }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="question_text">Question Text</label>
+                    <textarea id="question_text" name="question_text" rows="3" required>{{ question[2] if question else '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="option_a">Option A</label>
+                    <input type="text" id="option_a" name="option_a" value="{{ question[3] if question else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_b">Option B</label>
+                    <input type="text" id="option_b" name="option_b" value="{{ question[4] if question else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_c">Option C</label>
+                    <input type="text" id="option_c" name="option_c" value="{{ question[5] if question else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_d">Option D</label>
+                    <input type="text" id="option_d" name="option_d" value="{{ question[6] if question else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="correct_answer">Correct Answer</label>
+                    <select id="correct_answer" name="correct_answer" required>
+                        <option value="A" {{ 'selected' if question and question[7] == 'A' else '' }}>A</option>
+                        <option value="B" {{ 'selected' if question and question[7] == 'B' else '' }}>B</option>
+                        <option value="C" {{ 'selected' if question and question[7] == 'C' else '' }}>C</option>
+                        <option value="D" {{ 'selected' if question and question[7] == 'D' else '' }}>D</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Question</button>
+                    <a href="{{ url_for('admin_manage_questions', exam_id=exam[0]) }}" class="btn">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

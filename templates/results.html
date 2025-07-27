@@ -1,0 +1,39 @@
+<!-- templates/results.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Results - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">My Exam Results</h2>
+        </div>
+        <div class="card-body">
+            {% if results %}
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ result[1] }}</td>
+                                <td>{{ result[2] }}</td>
+                                <td>{{ result[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>You haven't taken any exams yet.</p>
+                <p><a href="{{ url_for('dashboard') }}" class="btn">Go to Dashboard</a></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

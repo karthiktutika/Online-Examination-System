@@ -1,0 +1,35 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Welcome to ExamMaster{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <h1>ExamMaster Online Examination System</h1>
+        <p>A secure and efficient platform for online assessments, tests, and examinations. Take your exams from anywhere, anytime!</p>
+        
+        {% if 'user_id' not in session %}
+            <div>
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                <a href="{{ url_for('register') }}" class="btn">Register</a>
+            </div>
+        {% else %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+        {% endif %}
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Secure Testing</h3>
+            <p>Our platform ensures secure examination environment with time limits and anti-cheating measures.</p>
+        </div>
+        <div class="feature">
+            <h3>Instant Results</h3>
+            <p>Get your exam results immediately after submission with detailed feedback.</p>
+        </div>
+        <div class="feature">
+            <h3>Diverse Question Types</h3>
+            <p>Support for multiple choice, true/false, and other question formats to test knowledge effectively.</p>
+        </div>
+    </section>
+{% endblock %}

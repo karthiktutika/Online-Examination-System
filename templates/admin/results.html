@@ -1,0 +1,55 @@
+<!-- templates/admin/results.html -->
+{% extends 'base.html' %}
+
+{% block title %}All Results - ExamMaster{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">All Exam Results</h2>
+        </div>
+        <div class="card-body">
+            <form method="GET" class="filter-form">
+                <div class="filter-group">
+                    <label for="exam_filter">Filter by Exam:</label>
+                    <select id="exam_filter" name="exam_id">
+                        <option value="">All Exams</option>
+                        {% for exam in exams %}
+                            <option value="{{ exam[0] }}" {{ 'selected' if selected_exam == exam[0]|string else '' }}>
+                                {{ exam[1] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-small">Apply Filter</button>
+            </form>
+            
+            {% if results %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ result[1] }}</td>
+                                <td>{{ result[2] }}</td>
+                                <td>{{ result[3] }}</td>
+                                <td>{{ result[4] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No results found.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
